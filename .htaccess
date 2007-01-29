@@ -1,6 +1,1 @@
-#RewriteEngine On
-#below line does not work on (gs) :(
-#RewriteCond %{HTTPS} off
-#RewriteRule \.* http://youngpup.net/%{SCRIPT_URI}
-
 DirectoryIndex note.php
