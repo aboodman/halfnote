@@ -1,3 +1,6 @@
+// Copyright 2001, Aaron Boodman
+// Used with permission
+
 //=====================================================================
 // Accel[erated] [an]imation object
 // change a property of an object over time in an accelerated fashion
@@ -19,7 +22,8 @@ function Accelimation(obj, prop, to, time, zip, unit) {
     if (typeof unit == "undefined") unit = "px";
 
     if (zip > 2 || zip <= 0)
-        throw new Error("Illegal value for zip. Must be less than or equal to 2 and greater than 0.");
+        throw new Error("Illegal value for zip. Must be less than or equal " +
+                        "to 2 and greater than 0.");
 
     this.obj    = obj;
     this.prop    = prop;
@@ -64,7 +68,9 @@ Accelimation.prototype.stop = function() {
 Accelimation.prototype._paint = function(time) {
     if (time < this.t1) {
         var elapsed = time - this.t0;
-        this.obj[this.prop] = Math.abs(Math.pow(elapsed, this.zip)) * this.A + this.x0 + this.unit;
+        this.obj[this.prop] =
+            Math.abs(Math.pow(elapsed, this.zip)) * this.A + this.x0 +
+            this.unit;
     }
     else this._end();
 }
@@ -92,7 +98,8 @@ Accelimation._add = function(o) {
     this.instances[index] = o;
     // if this is the first one, start the engine
     if (this.instances.length == 1) {
-        this.timerID = window.setInterval("Accelimation._paintAll()", this.targetRes);
+        this.timerID =
+            window.setInterval("Accelimation._paintAll()", this.targetRes);
     }
 }
 
@@ -100,7 +107,8 @@ Accelimation._add = function(o) {
 Accelimation._remove = function(o) {
     for (var i = 0; i < this.instances.length; i++) {
         if (o == this.instances[i]) {
-            this.instances = this.instances.slice(0,i).concat( this.instances.slice(i+1) );
+            this.instances =
+                this.instances.slice(0,i).concat( this.instances.slice(i+1) );
             break;
         }
     }
@@ -115,9 +123,9 @@ Accelimation._remove = function(o) {
 Accelimation._paintAll = function() {
     var now = new Date().getTime();
     for (var i = 0; i < this.instances.length; i++) {
-        // small chance that this accelimation could get dropped in the queue in the middle
-        // of a run. That means that it could have a t0 greater than "now", which means that
-        // elapsed would be negative.
+        // small chance that this accelimation could get dropped in the
+        // queue in the middle of a run. That means that it could have a
+        // t0 greater than "now", which means that elapsed would be negative.
         this.instances[i]._paint(Math.max(now, this.instances[i].t0));
     }
 }

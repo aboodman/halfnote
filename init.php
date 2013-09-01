@@ -23,18 +23,31 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR 
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-?>
-input, select {
-  border:1px solid grey;
-  margin-top:4px;
-  width:17.7em;
-}
 
-.error {
-  font-weight:bold;
-  color:red;
-}
+// This PHP file initializes a new client by assinging a client ID and returning
+// the current version of the note.
 
-.ok {
-  color:#090;
-}
+require("_functions.php");
+require("_database.php");
+
+$userId = validateUserCookie();
+$userId = db_escape($userId);
+$noteId = getRequiredGETParam('note');
+
+// Create a new client ID.
+// We use a MySQL variable to capture the value that next_client_id had before
+// the update so that we are atomic. Variables are connection-specific, and we
+// open a new connection for each PHP page view.
+db_query_set("update user set next_client_id = next_client_id + 1 
+              where id = '$userId' and @prev_client_id := next_client_id");
+
+$client = firstRow(db_query_get("select @prev_client_id as prev_client_id"));
+$client = $client['prev_client_id'];
+
+// Now get the latest version of the note from the database.
+$rslt = firstRow(db_query_get("select version, content from note
+                               where id = '$noteId'"));
+$version = $rslt['version'];
+$content = $rslt['content'];
+
+print "$client\n$version\n$content";

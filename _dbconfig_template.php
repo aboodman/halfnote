@@ -23,18 +23,11 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR 
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+// Customize this file to point to the database where db.sql has been setup.
+
+$DBI_DATABASE="";
+$DBI_USERNAME="";
+$DBI_PASSWORD="";
+$DBI_HOST="";
 ?>
-input, select {
-  border:1px solid grey;
-  margin-top:4px;
-  width:17.7em;
-}
-
-.error {
-  font-weight:bold;
-  color:red;
-}
-
-.ok {
-  color:#090;
-}

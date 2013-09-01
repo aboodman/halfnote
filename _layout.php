@@ -1,4 +1,4 @@
-<?
+<? 
 // Copyright 2007, Google Inc.
 //
 // Redistribution and use in source and binary forms, with or without 
@@ -23,18 +23,17 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR 
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-?>
-input, select {
-  border:1px solid grey;
-  margin-top:4px;
-  width:17.7em;
-}
 
-.error {
-  font-weight:bold;
-  color:red;
-}
-
-.ok {
-  color:#090;
-}
+function masthead($title = '') { ?>
+<table id="masthead" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+  <td align="left">
+    <? if ($title) print "<b id='title'>$title</b>"; ?>
+  </td>
+  <td id="login-bar" align="right" style="display:none">
+    <b id="logged-in-as"></b> 
+    | <a href="#" onclick="logout();">logout</a></span> 
+  </td>
+</tr>
+</table>
+<? } ?>

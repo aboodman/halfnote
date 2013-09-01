@@ -1,4 +1,3 @@
-<?
 // Copyright 2007, Google Inc.
 //
 // Redistribution and use in source and binary forms, with or without 
@@ -23,18 +22,21 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR 
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-?>
-input, select {
-  border:1px solid grey;
-  margin-top:4px;
-  width:17.7em;
+
+// probably more stuff like bind() should go in here, but meh.
+
+function listen(elm, ev, fn) {
+  if (elm.addEventListener) {
+    elm.addEventListener(ev, fn, false);
+  } else {
+    elm.attachEvent('on' + ev, fn);
+  }
 }
 
-.error {
-  font-weight:bold;
-  color:red;
-}
+if (typeof console == 'undefined') {
+  var console = {
+    log: function() {},
+    warn: function() {}
+  };
+ }
 
-.ok {
-  color:#090;
-}

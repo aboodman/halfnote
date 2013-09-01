@@ -23,18 +23,49 @@
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR 
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+require('_functions.php');
+
+header('Content-type: text/cache-manifest');
+
+$version = 0;
+$dir = dirname($_SERVER['SCRIPT_FILENAME']);
+$handle = opendir($dir);
+
+while (false !== ($file = readdir($handle))) {
+  if (file_exists("$dir/$file")) {
+    $v = filemtime("$dir/$file");
+    if ($v > $version) {
+      $version = $v;
+    }
+  }
+}
+
+$files = array(
+  '.',
+  'accelimation.js',
+  'base.js',
+  'cookies.js',
+  'datastore.js',
+  'favicon.png',
+  'labels.js',
+  'login.php',
+  'menu.js',
+  'note.js',
+  'utils.js',
+  'xhr.js'
+  );
+
+print("CACHE MANIFEST\n");
+print("#version  $version\n");
+
+foreach ($files as $file) {
+  print("$file\n");
+}
 ?>
-input, select {
-  border:1px solid grey;
-  margin-top:4px;
-  width:17.7em;
-}
 
-.error {
-  font-weight:bold;
-  color:red;
-}
-
-.ok {
-  color:#090;
-}
+NETWORK:
+init.php
+sync.php
+update.php
+x.gif
