@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule browser\.php$ /halfnote/ [R]
+RewriteRule !\. /halfnote/index.php [L]
+
